@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  consul-dev:
+    image: consul:latest
+    ports:
+     - "8500:8500"
+     - "8600:8600/udp"
+    container_name: "consul-dev"
+    command: consul agent -dev -client=0.0.0.0
+
+  consul-template:
+    image: hashicorp/consul-template:alpine
+    container_name: "consul-template"
+    volumes:
+     - "./consul-template.hcl:/data/consul-template.hcl:ro"
+     - "./src/config:/config"
+    command: consul-template -config /data/consul-template.hcl
