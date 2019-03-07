@@ -1,6 +1,12 @@
-consul = "consul-dev:8500"
-# retry = "10s"
-# max_stale = "10m"
+consul {
+  address = "consul-dev:8500"
+  retry {
+    enabled = true
+    attempts = 0
+    backoff = "250ms"
+    max_backoff = "1m"
+  }
+}
 
 template {
   source = "/config/config.tpl"
